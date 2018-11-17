@@ -9,9 +9,9 @@ export class Pagination extends Component {
     super(props);
     this.setContentInset()
   }
-
+  
   componentDidUpdate() {
-    this.list.pagination.scrollTo({ x: ((this.props.index * 64) - this.contentInset) });
+    this.list.pagination.scrollTo({ x: ((this.props.index * 30) - this.contentInset) });
     this.setContentInset();
   }
 
@@ -52,7 +52,8 @@ export class Pagination extends Component {
           {
             backgroundColor: this.props.backgroundColor,
             width: Dimensions.get('window').width,
-          }
+          },
+          Object.assign({},this.props.visible ? {} : {height:0, opacity:0,}), 
         ]}
         overScrollMode="never"
         alwaysBounceHorizontal={false}
@@ -65,8 +66,8 @@ export class Pagination extends Component {
 const s = {
   container: {
     position: 'absolute',
-    bottom: 0,
-    height: 64,
+    bottom: 60,
+    height: 40,
   },
   subContainer: {
     flexDirection: 'row',

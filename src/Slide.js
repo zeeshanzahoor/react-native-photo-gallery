@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Platform, Image, ActivityIndicator, Dimensions, View, ScrollView } from 'react-native';
+import { Platform, Image, ActivityIndicator, Dimensions, View, ScrollView, TouchableOpacity } from 'react-native';
 import PhotoView from 'react-native-photo-view';
 
 const styles = {
   slideC: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   scrollViewC: {
-    alignItems: 'center',
-    top: Platform.OS === 'android' ? -32 : 70,
-    justifyContent: 'center',
+    position: 'absolute',
+    left:0,top:0,
+    width:Dimensions.get('window').width,
+    height:Dimensions.get('window').height,
   },
   loader: {
     position: 'absolute',
@@ -23,22 +22,21 @@ const styles = {
 export class Slide extends Component {
   render() {
     const inside = {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height - 128,
+      width:Dimensions.get('window').width,
+      height:Dimensions.get('window').height,
+      left:0,right:0,
     };
-
     return (
       <View
         style={[
           styles.slideC,
-          { width: Dimensions.get('window').width, height: Dimensions.get('window').height }
-        ]}
-      >
-        <ActivityIndicator style={styles.loader} />
+          { width: Dimensions.get('window').width}
+        ]} >
+        {/* <ActivityIndicator style={styles.loader} /> */}
         {Platform.OS === 'android' ?
           <PhotoView
             source={this.props.item.image}
-            maximumZoomScale={3}
+            maximumZoomScale={2}
             zoomScale={1}
             androidScaleType="center"
             resizeMode="contain"
@@ -48,15 +46,19 @@ export class Slide extends Component {
             ]}
           /> :
           <ScrollView
-            maximumZoomScale={3}
+            maximumZoomScale={2}
             zoomScale={1}
-            style={[{ flex: 1 }, inside]}
+            bounces={false}
+            ref={ref => { this.scrollView = ref }}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollViewC}
             contentContainerStyle={[
-              styles.scrollViewC,
-              inside
-            ]}
-          >
-            <Image source={this.props.item.image} style={inside} resizeMode="contain" />
+              
+            ]} >
+            <TouchableOpacity activeOpacity={1} onPress={this.props.onSingleTap}>
+              <Image source={this.props.item.image} style={inside} resizeMode="contain" />
+            </TouchableOpacity>
           </ScrollView>
         }
         {this.props.item.overlay}

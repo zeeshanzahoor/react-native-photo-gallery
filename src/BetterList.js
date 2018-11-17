@@ -24,6 +24,7 @@ export default class BetterList extends Component {
        {...this.props}
        ref={sc => this.pagination = sc}
        initialListSize={this.props.initialPaginationSize}
+       showsHorizontalScrollIndicator={false}
        dataSource={this.state.dataSource}
       />
     );

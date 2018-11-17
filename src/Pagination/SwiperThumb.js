@@ -10,11 +10,10 @@ class SwiperThumb extends Component {
     return (
       <TouchableOpacity
         style={s.container}
-        onPress={this.goToSlide.bind(this)}
-      >
+        onPress={this.goToSlide.bind(this)}>
         <Image
-          style={{ ...s.thumb, opacity: this.props.active ? 1 : 0.6 }}
-          source={this.props.data[this.props.index].thumb||this.props.data[this.props.index].image}
+          style={{ ...s.thumb, opacity: this.props.active ? 1 : 0.6, width: this.props.active ? 40 : s.thumb.height, }}
+          source={this.props.data[this.props.index].thumb || this.props.data[this.props.index].image}
         />
       </TouchableOpacity>
     );
@@ -23,14 +22,17 @@ class SwiperThumb extends Component {
 
 const s = {
   container: {
-    width: 64,
+    width: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 64,
+    height: 40,
   },
   thumb: {
-    width: 64,
-    height: 64,
+    width: 30,
+    height: 40,
+  },
+  active: {
+    width: 60,
   }
 };
 
